@@ -1,0 +1,15 @@
+# Allow all
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://spse-scraper.example.com/sitemap.xml
+
+# Disallow for API and internal routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /test/
+
+# Crawl delay for search engines
+Crawl-delay: 10

@@ -1,0 +1,247 @@
+<!-- public/offline.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPSE Scraper - Offline Mode</title>
+    <style>
+        :root {
+            --primary: #6f42c1;
+            --secondary: #6610f2;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .offline-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .features h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .features ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "✓";
+            margin-right: 10px;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .offline-icon { font-size: 4rem; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="offline-icon">📡</div>
+        
+        <h1>Anda Sedang Offline</h1>
+        <p>Koneksi internet Anda terputus, tetapi Anda masih dapat mengakses beberapa fitur:</p>
+        
+        <div class="features">
+            <h3>Fitur yang Tersedia Saat Offline:</h3>
+            <ul>
+                <li>Lihat hasil pencarian sebelumnya</li>
+                <li>Akses data yang sudah di-cache</li>
+                <li>Lihat saved searches & favorites</li>
+                <li>Dashboard analytics (data offline)</li>
+                <li>Export data yang sudah tersimpan</li>
+            </ul>
+        </div>
+        
+        <p>Untuk pencarian real-time, pastikan koneksi internet tersedia.</p>
+        
+        <div class="actions">
+            <button class="btn btn-primary" onclick="window.location.reload()">
+                <span>🔄</span> Coba Koneksi Lagi
+            </button>
+            <button class="btn btn-secondary" onclick="goToDashboard()">
+                <span>📊</span> Lihat Dashboard Offline
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Cek koneksi
+        async function checkConnection() {
+            try {
+                const response = await fetch('/api/test', { 
+                    method: 'HEAD',
+                    cache: 'no-cache',
+                    timeout: 3000 
+                });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
+        
+        // Refresh otomatis jika kembali online
+        window.addEventListener('online', async () => {
+            const isConnected = await checkConnection();
+            if (isConnected) {
+                showToast('Koneksi internet kembali!', 'success');
+                setTimeout(() => window.location.reload(), 2000);
+            }
+        });
+        
+        function goToDashboard() {
+            // Redirect ke dashboard dengan mode offline
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'NAVIGATE',
+                    url: '/dashboard?mode=offline'
+                });
+            } else {
+                window.location.href = '/dashboard?mode=offline';
+            }
+        }
+        
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // Cek koneksi secara berkala
+        setInterval(async () => {
+            const isConnected = await checkConnection();
+            if (isConnected) {
+                window.location.reload();
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

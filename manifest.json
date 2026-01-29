@@ -1,0 +1,94 @@
+{
+  "short_name": "SPSE Scraper",
+  "name": "SPSE Scraper - Pencarian Tender Nasional",
+  "description": "Aplikasi pencarian paket dan pemenang tender di 8 LPSE Indonesia dengan support offline",
+  "icons": [
+    {
+      "src": "/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/splash.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#6f42c1",
+  "theme_color": "#6f42c1",
+  "display": "standalone",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Cari Vendor",
+      "short_name": "Vendor",
+      "description": "Cari pemenang tender berdasarkan vendor",
+      "url": "/vendor?source=pwa",
+      "icons": [{ "src": "/icon-vendor.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Cari Paket",
+      "short_name": "Paket",
+      "description": "Cari paket tender nasional",
+      "url": "/package?source=pwa",
+      "icons": [{ "src": "/icon-package.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Lihat analytics dan saved searches",
+      "url": "/dashboard?source=pwa",
+      "icons": [{ "src": "/icon-dashboard.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "type": "image/png",
+      "sizes": "1920x1080",
+      "form_factor": "wide",
+      "label": "Dashboard Analytics"
+    },
+    {
+      "src": "/screenshot2.png",
+      "type": "image/png",
+      "sizes": "1080x1920",
+      "form_factor": "narrow",
+      "label": "Mobile Search"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+spse",
+      "url": "/?url=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "name",
+      "text": "description",
+      "url": "link"
+    }
+  },
+  "handle_links": "preferred",
+  "related_applications": [],
+  "prefer_related_applications": false
+}
