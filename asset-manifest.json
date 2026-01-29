@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/spse-scraper-react/static/css/main.00803f03.css",
-    "main.js": "/spse-scraper-react/static/js/main.b8011217.js",
+    "main.js": "/spse-scraper-react/static/js/main.d4a59fd2.js",
     "static/css/634.dfafff8e.chunk.css": "/spse-scraper-react/static/css/634.dfafff8e.chunk.css",
     "static/js/634.5aeac0bb.chunk.js": "/spse-scraper-react/static/js/634.5aeac0bb.chunk.js",
     "static/js/849.3229c30e.chunk.js": "/spse-scraper-react/static/js/849.3229c30e.chunk.js",
@@ -19,7 +19,7 @@
     "static/js/751.a7f2493b.chunk.js": "/spse-scraper-react/static/js/751.a7f2493b.chunk.js",
     "index.html": "/spse-scraper-react/index.html",
     "main.00803f03.css.map": "/spse-scraper-react/static/css/main.00803f03.css.map",
-    "main.b8011217.js.map": "/spse-scraper-react/static/js/main.b8011217.js.map",
+    "main.d4a59fd2.js.map": "/spse-scraper-react/static/js/main.d4a59fd2.js.map",
     "634.dfafff8e.chunk.css.map": "/spse-scraper-react/static/css/634.dfafff8e.chunk.css.map",
     "634.5aeac0bb.chunk.js.map": "/spse-scraper-react/static/js/634.5aeac0bb.chunk.js.map",
     "849.3229c30e.chunk.js.map": "/spse-scraper-react/static/js/849.3229c30e.chunk.js.map",
@@ -38,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.00803f03.css",
-    "static/js/main.b8011217.js"
+    "static/js/main.d4a59fd2.js"
   ]
 }
